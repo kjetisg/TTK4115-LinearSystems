@@ -7,10 +7,10 @@ The course had two projects that counted 50% towards the final grade, a helicopt
 
 ## Helicopter laboratory assignement
 The point of the helicopter project was to:
-* **** Derive a model for a given system (helicopter) to be used for control purposes
-* **** Derive and apply PD and multivariable controllers in a real-time environment
-* **** Demonstrate how states that are not directly measured can be estimated
-* **** Give an introduction to optimal control by developing a linear quadratic regulator (LQR) for the helicopter.
+*  Derive a model for a given system (helicopter) to be used for control purposes
+*  Derive and apply PD and multivariable controllers in a real-time environment
+*  Demonstrate how states that are not directly measured can be estimated
+*  Give an introduction to optimal control by developing a linear quadratic regulator (LQR) for the helicopter.
 
 The project is divded into four parts:
 
@@ -27,10 +27,10 @@ We were given an MATLAB code for initialization of the system, and a Simulink-mo
 ## Ship autopilot using discrete Kalman filtering
 The purpose of the ship assignement was to:
 
-* **** Partly model and simulate a continuous system influenced by stochstic signals
-* **** Use basic identification techniques on parameters that are not explicitly given
-* **** Use basic control theory to design a simple autopilot
-* **** Implement a discrete Kalman filter for wave filtering and estimation of disturbances using MATLAB and Simulink
+*  Partly model and simulate a continuous system influenced by stochstic signals
+*  Use basic identification techniques on parameters that are not explicitly given
+*  Use basic control theory to design a simple autopilot
+*  Implement a discrete Kalman filter for wave filtering and estimation of disturbances using MATLAB and Simulink
 
 This project used a given ship model in Simulink as a starting point, a .mat file containing wave data and a Kalman filter function shell i MATLAB (we instead implemented one separate). The report is divided into five sections:
 
