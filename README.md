@@ -1,4 +1,4 @@
-# TTK4115-Linear Systems Theory (http://www.ntnu.edu/studies/courses/TTK4115#tab=omEmnet)
+# [TTK4115-Linear Systems Theory](http://www.ntnu.edu/studies/courses/TTK4115#tab=omEmnet)
 Projects from the course TTK4115 - Linear Systems Theory @ NTNU
 
 **Course content:** Theory for linear multivariable systems, state space models, discretization, canonical forms and realizations, Lyapunov stability, controllability and observability, state feedback, LQR control, state estimation, the Kalman filter, descriptions of stochastic processes and random signals. 
