@@ -1,0 +1,36 @@
+\section{Monovariable Control}
+
+
+\subsection{PD Controller}
+Given the controller
+\begin{align}
+    \tilde{V_d} = K_{pp}(\widetilde{p}_c-\widetilde{p}) - K_{pd}\dot{\tilde{p}} 
+    \quad\quad, K_{pp},K{pd} >0  \label{PDcont}
+\end{align}
+with reference pitch $\widetilde{p}_c$. To find the transfer function $\frac{\tilde{p}}{\tilde{p}_c}(s)$ we insert (\ref{PDcont}) into (6a) and then laplace transform:
+%
+\begin{align}
+    \ddot{\tilde{p}} &= K_1K_{pp}(\tilde{p}_c-\tilde{p}) - K_1K_{pd}\dot{\tilde{p}}\nonumber\\
+    s^2\tilde{p} &= K_1K_{pp}\tilde{p}_c - K_1K_{pp}\tilde{p} - K_1K_{pd}s\tilde{p}\nonumber\\
+    \Rightarrow \dfrac{\tilde{p}}{\tilde{p}_c}(s) &= \frac{K_1K_{pp}}{s^2+K_1K_{pd}+K_1K_{pp}}  \label{transf}
+\end{align}
+%
+Comparing this transfer function to a standard 2nd. order transfer function
+%
+\begin{align*}
+    h(s) = \frac{1}{(\frac{s}{\omega_0})^2 + 2\zeta\frac{s}{\omega_0} + 1}
+\end{align*}
+%
+we get the following equations for $K_{pp}$ and $K_{pd}$ which we based our actual values on:
+%
+\begin{align}
+    \omega_0 &= \sqrt{K_1K_{pp}}                     \nonumber\\
+    \frac{\zeta}{\omega_0} &= \frac{K_{pd}}{2K_{pp}} \nonumber\\
+    K_{pd} &= 2\frac{\sqrt{K_1K_{pp}}}{K_1}          \label{Kpd}
+\end{align}
+%
+This is under the condition that $\zeta = 1$, giving a critically damped system.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

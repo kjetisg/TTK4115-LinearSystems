@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{parskip} %skip the indent of a new paragraph.
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[export]{adjustbox}
+\usepackage{tabstackengine}
+\usepackage{color}
+\lstset{language=Matlab, frame=single, breaklines=true,numbers=left, keywordstyle=\color{blue},rulecolor=\color{black},commentstyle=\color{gray}}
+
+\usepackage{cleveref}
+\usepackage{todonotes}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+%\newcommand{\TODO}[1]{\todo[inline]{#1}}
+
+
+\title{Linear Systems TTK4115 - Helicopter Assignement}
+\author{-- 759494 -- \\  -- 748434 -- }
+\date{\today}%September 2016 TODO}
+
+\begin{document}
+
+\begin{titlepage}
+    \maketitle
+    \rule{\linewidth}{0.5mm}
+    
+    %\begin{abstract}
+    %\input{abstract}
+    %\end{abstract}
+    
+    \begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{logontnu_eng}
+    \end{figure}
+    \thispagestyle{empty}
+\end{titlepage}
+
+%\section*{Table of contents} 
+\tableofcontents
+\thispagestyle{empty} %Avoid page numbering on the table of contents
+\newpage    
+
+
+\setcounter{page}{1}
+\input{part1}
+\input{part2}
+\input{part3}
+\input{part4}
+%\input{summary}
+
+\newpage 
+\input{reference}
+
+
+
+
+
+\end{document}

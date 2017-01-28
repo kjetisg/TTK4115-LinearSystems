@@ -1,0 +1,147 @@
+\section{Multivariable Control}
+
+Using the system described by (6a)-(6b) we get the following state-space model
+\begin{equation}
+    \vec{\dot{x}} = \begin{bmatrix}     % A
+                                0&1&0\\
+                                0&0&0\\
+                                0&0&0
+                    \end{bmatrix}
+                    \begin{bmatrix}     % x
+                                \tilde{p}\\
+                                \dot{\tilde{p}}\\
+                                \tilde{e}
+                    \end{bmatrix}
+                    +
+                    \begin{bmatrix}     % B
+                                0&0\\
+                                0&K_1\\
+                                K_2&0
+                    \end{bmatrix}
+                    \begin{bmatrix}     % u
+                                \tilde{V_s}\\
+                                \tilde{V_d}
+                    \end{bmatrix}
+\end{equation}
+%
+\subsection{Controllability and LQR}
+The controllability matrix for a $3\times3$ system is given by
+\begin{equation}
+    \begin{bmatrix}
+            B & AB & A^2B
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+            0&0&0&K_1&0&0\\
+            0&K_1&0&0&0&0\\
+            K_2&0&0&0&0&0
+    \end{bmatrix}
+\end{equation}
+which has $ rank = n = 3 $. Thus the system is controllable.\\ \\
+Now we will use a controller on the form $$ \vec{u} = \vec{Pr}-\vec{Kx}$$
+where the input $\vec{u} = -\vec{Kx}$ minimizes the costfunction 
+$$J = \int_{0}^{\infty}(\vec{x}^T(t)\vec{Qx}(t) + \vec{u}^T(t)\vec{Ru}(t))dt $$ and $\vec{r} = [\tilde{p}_c \quad \dot{\tilde{e}}_c]^T$. $\vec{K}$ here corresponds to the linear quadratic regulator and $\vec{Q}$ and $\vec{R}$ are diagonal matrices. \\
+
+The matrix $\vec{P}$ is found such that $\lim_{t\rightarrow\infty}\tilde{p}=\tilde{p}_c$ and $\lim_{t\rightarrow\infty}\dot{\tilde{e}} = \dot{\tilde{e}}_c$:
+\begin{align}
+    \dot{\vec{x}} &= \vec{Ax} + \vec{Bu}    \nonumber\\ \nonumber
+    &= \vec{Ax} + \vec{B(Pr-Kx)} = 0\\\nonumber
+    \Rightarrow& (\vec{A}-\vec{BK})\vec{x}_\infty = -\vec{BP}\vec{r}_0\\\nonumber
+    \Rightarrow& \vec{y}_\infty = [\vec{C}(\vec{BK}-\vec{A})^{-1}\vec{B}]\vec{Pr}_0 \nonumber\\ \nonumber\\
+    \text{which in turn gives}\nonumber\\ \nonumber\\
+    \vec{P} &= [\vec{C}(\vec{BK}-\vec{A})^{-1}\vec{B}]^{-1} \label{Pmatrix}
+\end{align}
+
+
+
+Our weighting matrices were as follows
+%
+\begin{align*}
+    \vec{Q} = \begin{bmatrix}
+                15&0&0\\
+                0&1&0\\
+                0&0&10
+            \end{bmatrix} 
+    \quad
+    \vec{R} = \begin{bmatrix}
+                0.1&0\\
+                0&0.3
+            \end{bmatrix}
+\end{align*}
+%
+The elements of the matrix $\vec{Q}$ were chosen such that it penalized deviations in the pitch and elevation rate, i.e. $\vec{Q}_{11}$ and $\vec{Q}_{33}$ were increased. $\vec{Q}_{11} < \vec{Q}_{33}$ gave less elevation control from the helicopter, thus we chose $\vec{Q}_{11} > \vec{Q}_{33}$ as shown. \\
+The elements of R were set a bit lower as to "lower the cost" of using input. $\vec{R}_{22}$ were chosen larger than $\vec{R}_{11}$ as the opposite gave o.k. control, but resulted in a trade-off in regard to elevation vs pitch control. \\
+
+The resulting $\vec{K}$ matrix were found using the MATLAB-command 
+%
+\begin{lstlisting}  
+    K = lqr(A, B, Q, R);
+\end{lstlisting}
+%
+then the $\vec{P}$ matrix were calculated using \cref{Pmatrix}, giving
+%
+\begin{align*}
+    \vec{K} =   \begin{bmatrix}
+                    0       & 0      & 10 \\
+                    7.07    & 5.12   & 0
+                 \end{bmatrix}
+        \quad \quad
+    \vec{P} =   \begin{bmatrix}
+                    0       & 10 \\
+                    7.07    & 0
+                \end{bmatrix} .
+\end{align*}
+%
+%
+%
+%\newpage
+\subsection{LQR with PI}
+
+To include a PI-controller in our model we introduce two new states 
+$$  \dot{\gamma} = \tilde{p} - \tilde{p}_c $$ 
+$$  \dot{\zeta} = \tilde{e} - \tilde{e}_c  $$
+which gives a new state vector 
+$\vec{x} = [\tilde{p} \enskip \dot{\tilde{p}} \enskip \dot{\tilde{e}} \enskip \gamma \enskip \zeta]^T$. This in turn gives the new state-space matrices
+\begin{align*}
+    \vec{A} =   \begin{bmatrix}
+                    0&1&0&0&0&0\\
+                    0&0&0&0&0&0\\
+                    0&0&0&0&0&0\\
+                    1&0&0&0&0&0\\
+                    0&0&1&0&0&0
+                \end{bmatrix}
+        \quad
+    \vec{B} =   \begin{bmatrix}
+                    0&0\\
+                    0&K_1\\
+                    K_2&0\\
+                    0&0\\
+                    0&0
+                \end{bmatrix}
+\end{align*}
+as well as a new $\vec{Q}$ matrix 
+$$\vec{Q} = \begin{bmatrix}
+                15&0&0&0&0\\
+                0&1&0&0&0\\
+                0&0&10&0&0\\
+                0&0&0&2&0\\
+                0&0&0&0&10
+            \end{bmatrix}.
+$$
+This state expansion also increases the dimensions of $\vec{K}$, which is calculated as before. $\vec{P}$ can't now be calculated as before, but observing that 
+$$
+\vec{K} =   \begin{bmatrix}
+                \vec{K}{11} & ... & \vec{K}_{1m}\\
+                .&.&.\\
+                .&.&.\\
+                .&.&.\\
+                \vec{K}_{n1} & ... & \vec{K}_{nm}
+            \end{bmatrix}
+    \quad \Rightarrow \quad
+\vec{P} =   \begin{bmatrix}
+                \vec{K}_{11} & \vec{K}_{1m}\\
+                \vec{K}_{n1} & \vec{K}_{nm}
+            \end{bmatrix}
+$$
+throughout, simplifies the calculations for $\vec{P}$.\\
+The PI controller performed better overall than the P controller. With the PI we were able to get faster to steady-state without overshooting as well as getting proper elevation control with constant input.
